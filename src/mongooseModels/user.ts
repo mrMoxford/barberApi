@@ -1,0 +1,22 @@
+import {Schema, Types, model} from "mongoose"
+
+
+
+const userSchema = new Schema({
+    email: {
+        type: String,
+        required: true
+      },
+      password: {
+        type: String,
+        required: true
+      },
+      createdEvents: [
+        {
+          type: Types.ObjectId,
+          ref: 'Event'
+        }
+      ]
+})
+
+export = model("User", userSchema)
