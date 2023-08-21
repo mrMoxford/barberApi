@@ -1,22 +1,23 @@
-import {Schema, Types, model} from "mongoose"
+import mongoose , {Types} from "mongoose";
 
 
+const Schema = mongoose.Schema
 
 const userSchema = new Schema({
-    email: {
+    email:{ 
+        type: String,
+        unique: true,
+        required: true
+    },
+    password: {
         type: String,
         required: true
-      },
-      password: {
-        type: String,
-        required: true
-      },
-      createdEvents: [
+    },
+    createdEvents: [
         {
-          type: Types.ObjectId,
-          ref: 'Event'
+        type: Types.ObjectId,
+        ref: 'Event'
         }
-      ]
+]
 })
-
-export = model("User", userSchema)
+ export const User = mongoose.model("User", userSchema)

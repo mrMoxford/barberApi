@@ -1,3 +1,3 @@
-const dateTransformer = (dateString: string) =>{
+export const dateTransformer = (dateString: Date) =>{
     return new Date(dateString). toISOString()
 }

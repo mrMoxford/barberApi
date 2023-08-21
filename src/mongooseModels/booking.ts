@@ -1,18 +1,17 @@
-import {Schema, Types, model} from "mongoose"
+import mongoose, {Types} from "mongoose";
+const Schema = mongoose.Schema
 
 
-
-const bookingScbema = new Schema({
+const bookingSchema = new Schema({
     event: {
         type: Types.ObjectId,
-        ref: 'Event'
-      },
-      user: {
-        type: Types.ObjectId,
-        ref: 'User'
-      }
+        ref : "Event"
     },
-    { timestamps: true }
-)
+    user: {
+        type: Types.ObjectId,
+        ref : "User"
+    },
+    
+},{ timestamps: true},)
 
-export = model("booking", bookingScbema) 
+export const Booking: any = mongoose.model("Booking", bookingSchema)

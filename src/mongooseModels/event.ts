@@ -1,26 +1,26 @@
-import {Schema, Types, model} from "mongoose"
+import mongoose, {Types} from "mongoose";
+const Schema = mongoose.Schema
 
 const eventSchema = new Schema({
-    title: {
+    title:{ 
         type: String,
         required: true
-      },
-      description: {
+    },
+    desc: {
         type: String,
         required: true
-      },
-      price: {
+    },
+    price: {
         type: Number,
         required: true
-      },
-      date: {
+    },
+    date: {
         type: Date,
         required: true
-      },
-      creator: {
-          type: Types.ObjectId,
-          ref: 'User'
-      }
+    },
+    creator: {
+        type: Types.ObjectId,
+        ref: 'User'
+    }
 })
-
-export = model("Event", eventSchema)
+ export const Event = mongoose.model("Event", eventSchema)
