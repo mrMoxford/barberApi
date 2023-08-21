@@ -13,7 +13,7 @@ const event_1 = require("../../mongooseModels/event");
 const booking_1 = require("../../mongooseModels/booking");
 const merge_1 = require("./merge");
 const bookingResolver = {
-    bookings: () => __awaiter(void 0, void 0, void 0, function* () {
+    booking: () => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const bookings = yield booking_1.Booking.find();
             return bookings.map((booking) => {
@@ -24,10 +24,13 @@ const bookingResolver = {
             throw err;
         }
     }),
-    bookEvent: (args) => __awaiter(void 0, void 0, void 0, function* () {
+    createBooking: (args, req) => __awaiter(void 0, void 0, void 0, function* () {
+        if (!req.isAuth) {
+            throw new Error("User not authenticated");
+        }
         const fetchedEvent = yield event_1.Event.findOne({ _id: args.eventID });
         const booking = new booking_1.Booking({
-            user: '5c0fbd06c816781c518e4f3e',
+            user: req.userID,
             event: fetchedEvent
         });
         const result = yield booking.save();

@@ -1,6 +1,7 @@
 import {Event} from "../../mongooseModels/event"
 import { Booking } from "../../mongooseModels/booking"
 import {Types} from "mongoose"
+import {IGetUserAuthInfoRequest} from "../../middleware/authorised"
 import {bookingTransformer,eventTransformer} from "./merge"
   
 interface bookingArgs {
@@ -17,7 +18,7 @@ interface cancelBookingArgs {
   }
 }
 const bookingResolver = {
-  bookings: async () => {
+  booking: async () => {
     try {
       const bookings = await Booking.find();
       return bookings.map((booking: any) => {
@@ -27,10 +28,13 @@ const bookingResolver = {
       throw err;
     }
   },
-  bookEvent: async (args: bookingArgs) => {
+  createBooking: async (args: bookingArgs,req: IGetUserAuthInfoRequest) => {
+    if(!req.isAuth){
+      throw new Error ("User not authenticated")
+    }
     const fetchedEvent = await Event.findOne({ _id: args.eventID });
     const booking = new Booking({
-      user: '5c0fbd06c816781c518e4f3e',
+      user: req.userID,
       event: fetchedEvent
     });
     const result = await booking.save();

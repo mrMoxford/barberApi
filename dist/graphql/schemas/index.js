@@ -3,10 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.graphqlSchema = void 0;
 const graphql_1 = require("graphql");
 exports.graphqlSchema = (0, graphql_1.buildSchema)(`
+
 type Booking {
-    _id: ID!
-    event: Event!
+    _id: ID! 
     user: User!
+    event: Event!
     createdAt: String!
     updatedAt: String!
 }
@@ -26,6 +27,11 @@ type User {
   password: String
   createdEvents: [Event!]
 }
+type LoginData {
+  userID: ID!
+  token: String!
+  tokenExpiry: Int!
+}
 
 input EventInput {
   title: String!
@@ -36,26 +42,24 @@ input EventInput {
 
 input UserInput {
   email: String!
-  password: String!
+  password: String
 }
-
-type RootQuery {
-    events: [Event!]!
-    users: [User!]!
-    bookings: [Booking!]!
+type rootQuery {
+  events: [Event!]!
+  users: [User!]! 
+  bookings: [Booking!]!
+  login(email: String!, password: String!):LoginData!
 }
-
-type RootMutation {
-    createEvent(eventInput: EventInput): Event
-    createUser(userInput: UserInput): User
-    bookEvent(eventId: ID!): Booking!
-    cancelBooking(bookingId: ID!): Event!
+type rootMutation {
+ 
+  createEvent(eventInput: EventInput): Event
+  createUser(userInput: UserInput): User
+  createBooking(eventID: ID): Booking
+  cancelBooking(bookingID: ID): Event
 }
 
 schema {
-    query: RootQuery
-    mutation: RootMutation
+  query: rootQuery
+  mutation: rootMutation
 }
-
-
 `);

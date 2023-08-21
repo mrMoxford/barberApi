@@ -5,8 +5,6 @@ import {User} from "../../mongooseModels/user"
 import { userTransformer } from "./merge";
 
 
-
-
 interface userArgs {
     userInput: {
       email: string,
